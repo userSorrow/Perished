@@ -29,6 +29,10 @@ class Map:
 
     def addPlayer(self, player):
         self.grid[2][2] = player
+    
+    def updatePlayerPosition(self, player):
+        if not (player.positionY > self.height or player.positionX > self.width):
+            self.grid[player.positionY][player.positionX] = player
 
     def __str__(self) -> str:
         gridStr = ""

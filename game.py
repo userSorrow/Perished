@@ -6,5 +6,10 @@ from core.generator import Generator
 map = Map()
 playerName = input("Enter Player Name: ")
 player = Player(playerName, map)
+player.move("right")
+map.updatePlayerPosition(player)
+print(player.areaAroundPlayer())
+
 
 print(map)
+
