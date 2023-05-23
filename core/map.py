@@ -7,6 +7,7 @@ class Map:
         self.width = width
         self.height = height
         self.grid = [[None for i in range(width)] for i in range(height)]
+        self.__grid = self.grid
         self.positions = [(i, j) for i in range(width) for j in range(height)]        
         self.emptyCoordinates = self.positions
         self.autogenerate(numGens, numPallets)
@@ -33,6 +34,9 @@ class Map:
     def updatePlayerPosition(self, player):
         if not (player.positionY > self.height or player.positionX > self.width):
             self.grid[player.positionY][player.positionX] = player
+    
+    def getItemAt(self, x, y):
+        return self.__grid[y][x]
 
     def __str__(self) -> str:
         gridStr = ""

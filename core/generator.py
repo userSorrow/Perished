@@ -1,6 +1,4 @@
 class Generator:
-    
-    
     def __init__(self):
         self.progress = 0 # max 100
         self.completed = False
