@@ -10,8 +10,25 @@ Completion List:
     - Pallets do not spawn in the corner (finished)
     - Generators are spreaded across evenly (yeah im gonna do that later)
 
-4. Gate class   
-    - string will be ~~~
-    - Upon completing all generators, the gate will spawn randomly from one side of the map 
-    - a portion of the wall will be replaced with Gate 
+4. 
+
+5. Gate class   
+    - string will be ~~~ (completed)
+    - Upon completing all generators, the gate will spawn randomly from one side of the map (completed)
+    - a portion of the wall will be replaced with Gate (completed)
+    - When player arrives at gate and escapes, game should be over
+
+6. Killer class
+    - Killer similar to player
+    - Ability to break Pallets
+    - Kicks generator to limit progress
+    - Attacks player for one damage
+
+7. Item class   
+    - Toolboxes, finishes generators faster
+    - Medkit, heals one health
+    - eh, more to come 
+
+8. Perks and 
+
     

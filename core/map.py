@@ -37,7 +37,7 @@ class Map:
         for y in range(len(self.grid)):
             for x in range(len(self.grid)):
                 if y % (len(self.grid) - 1) in [0, (len(self.grid) - 1)] or x % (len(self.grid) - 1) in [0, (len(self.grid) - 1)]:
-                    self.grid[y][x] = Wall(x,y)
+                    self.grid[y][x] = Wall()
                     self.emptyCoordinates.remove((x,y))
 
         for _ in range(numGens):
@@ -56,11 +56,13 @@ class Map:
         
         midpoint = random.choice(self.midpoints)
         x, y = midpoint
-        self.grid[y][x] = Gate()
+        if x not in [0, self.height - 1]:
+            for i in range(x - 1, x + 2):
+                self.grid[y][i] = Gate()
+        elif y not in [0, self.width - 1]:
+            for i in range(y - 1, y + 2):
+                self.grid[i][x] = Gate()
         self.gateOpen = True
-    
-        
-        
     
     def addPlayer(self, player) -> None:
         self.grid[player.positionY][player.positionX] = player

@@ -19,12 +19,13 @@ class Player:
         self.map = map
         self.positionX = int((self.map.height - 1) / 2) if self.map.height % 2 == 1 else int((self.map.height) / 2) # this  
         self.positionY = int((self.map.width - 1) /2) if self.map.width % 2 == 1 else int((self.map.width) / 2)
+        self.crossGate = False
         map.addPlayer(self)
     
     def isDead(self):
         return self.health <= 2
     
-    def getAvailableOptions(self):
+    def getAvailableOptions(self) -> str:
         """
         options = {
             "Move": ["up", "down", "right", "left"],
@@ -55,7 +56,7 @@ class Player:
 
         return options
     
-    def areaAroundPlayer(self):
+    def areaAroundPlayer(self) -> list:
         area = []
         # [space above player, space below player, space to the left of player, space to the right of the player]
         
@@ -67,12 +68,12 @@ class Player:
         return area
     
     # @getattr
-    def getItemAt(self, move):
+    def getItemAt(self, move) -> object:
         changeX = self.movementChanges[move][0]
         changeY = self.movementChanges[move][1]
         return self.map.grid[self.positionY + changeY][self.positionX + changeX]
   
-    def move(self, direction):
+    def move(self, direction) -> None:
         # need a method to check the surrounding of the player
         # if the grid where the player is going is None, that means it is an empty site
         
@@ -84,7 +85,7 @@ class Player:
             self.positionY += self.movementChanges[direction][1]
             
         if isinstance(item, Generator):
-            item.increaseProgress(100) 
+            item.increaseProgress(100) # max is 100, I set it at 100 for testing purpose
             if item.isGenCompleted():
                 x = item.positionX
                 y = item.positionY
@@ -108,11 +109,10 @@ class Player:
                 self.positionX = originalX
                 self.positionY = originalY
         
-        if isinstance(item, Gate):
-            pass
-            
-
-        self.map.grid[self.positionY][self.positionX] = self # put player back on map (and suits perfectly for walls)
+        if not isinstance(item, Gate):
+            self.map.grid[self.positionY][self.positionX] = self # put player back on map (and suits perfectly for walls)
+        else:
+            self.crossGate = True
         
     def __str__(self) -> str:
         return "*"

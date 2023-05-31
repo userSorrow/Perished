@@ -5,7 +5,7 @@ from core.generator import Generator
 from core.wall import Wall
 from core.gate import Gate
 
-map = Map(10,10)
+map = Map(11,11)
 #playerName = input("Enter Player Name: ")
 player = Player("b", map)
 playing = True
@@ -23,6 +23,11 @@ while playing:
     totalGenLeft = len(Generator.all)
     if totalGenLeft == 0 and not map.gateOpen:
         map.generateGate()
+    
+    playing = not player.crossGate
+
+print("""\nYou survived!    
+For now....""")
         
     
     
