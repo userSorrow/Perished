@@ -1,0 +1,17 @@
+Completion List:
+
+1. When generator is finished, generator disappears (finished)
+    - Added Generator positions (x,y)
+    
+2. Pallets can vault(finished)
+
+
+3. Better autogenerate
+    - Pallets do not spawn in the corner (finished)
+    - Generators are spreaded across evenly (yeah im gonna do that later)
+
+4. Gate class   
+    - string will be ~~~
+    - Upon completing all generators, the gate will spawn randomly from one side of the map 
+    - a portion of the wall will be replaced with Gate 
+    

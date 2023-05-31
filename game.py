@@ -2,11 +2,12 @@ from core.player import Player
 from core.map import Map
 from core.pallet import Pallet
 from core.generator import Generator
+from core.wall import Wall
+from core.gate import Gate
 
-map = Map()
+map = Map(10,10)
 #playerName = input("Enter Player Name: ")
 player = Player("b", map)
-
 playing = True
 
 while playing:
@@ -16,4 +17,12 @@ while playing:
     for option in list(options.keys()):
         print(str(option) + ": " + str(options[option]))
     selected = input("What would you like to do? ")
-    player.move(selected)
+    player.move(selected.lower())
+    
+
+    totalGenLeft = len(Generator.all)
+    if totalGenLeft == 0 and not map.gateOpen:
+        map.generateGate()
+        
+    
+    

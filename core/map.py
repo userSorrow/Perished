@@ -1,39 +1,69 @@
 import random
 from core.generator import Generator
 from core.pallet import Pallet
+from core.wall import Wall
+from core.gate import Gate
 
 class Map:
-    def __init__(self, width = 5, height = 5, numGens = 3, numPallets = 3):
+    def __init__(self, width = 7, height = 7, numGens = 3, numPallets = 3): # 
         self.width = width
         self.height = height
-        self.grid = [[None for i in range(width)] for i in range(height)]
+        self.grid = [[None for _ in range(width)] for _ in range(height)] # _ --> means annoynomous variable
         self.__grid = self.grid
-        self.positions = [(i, j) for i in range(width) for j in range(height)]        
+        self.positions = [(i, j) for i in range(width) for j in range(height)]  
+        self.corners = [(1,1), (1, height - 2), (width - 2, 1), (width - 2, height - 2)]   
+        
+        # finds the midpoints of the sides of the map
+        self.midpoints = [(0, int((height - 1) / 2)) if width % 2 == 1 else (0, int(width / 2)), 
+                          (width - 1, int((height - 1) / 2)) if width % 2 == 1 else (width - 1, int(width / 2)),
+                          (int((width - 1) / 2), height - 1) if width % 2 == 1 else ( int(width / 2), height - 1),
+                          (int((width - 1) / 2), 0) if width % 2 == 1 else (int(width / 2), 0)]
+        
         self.emptyCoordinates = self.positions
+        self.gateOpen = False
         self.autogenerate(numGens, numPallets)
 
     def autogenerate(self, numGens, numPallets):
         # No (2, 2), preexisting position
-        self.emptyCoordinates.remove((2, 2)) # for player
+        playerPosX = int((self.height - 1) / 2) if self.height % 2 == 1 else int((self.height) / 2)
+        playerPosY = int((self.width - 1) /2) if self.width % 2 == 1 else int((self.width) / 2)
+        self.emptyCoordinates.remove((playerPosX, playerPosY)) # for player
+        
+        # First, generate the outer walls
+        
+        for corner in self.corners: #removes corner spawns 
+            self.emptyCoordinates.remove(corner)
+        
+        for y in range(len(self.grid)):
+            for x in range(len(self.grid)):
+                if y % (len(self.grid) - 1) in [0, (len(self.grid) - 1)] or x % (len(self.grid) - 1) in [0, (len(self.grid) - 1)]:
+                    self.grid[y][x] = Wall(x,y)
+                    self.emptyCoordinates.remove((x,y))
 
-        for i in range(numGens):
+        for _ in range(numGens):
             coordinate = random.choice(self.positions)
             x, y = coordinate
-            self.grid[y][x] = Generator()
+            self.grid[y][x] = Generator(x,y)
             self.emptyCoordinates.remove(coordinate)
         
-        for i in range(numPallets):
+        for _ in range(numPallets):
             coordinate = random.choice(self.positions)
             x, y = coordinate
             self.grid[y][x] = Pallet()
             self.emptyCoordinates.remove(coordinate)
 
-    def addPlayer(self, player):
-        self.grid[2][2] = player
+    def generateGate(self) -> None:
+        
+        midpoint = random.choice(self.midpoints)
+        x, y = midpoint
+        self.grid[y][x] = Gate()
+        self.gateOpen = True
     
-    def updatePlayerPosition(self, player):
-        if not (player.positionY > self.height or player.positionX > self.width):
-            self.grid[player.positionY][player.positionX] = player
+        
+        
+    
+    def addPlayer(self, player) -> None:
+        self.grid[player.positionY][player.positionX] = player
     
     def getItemAt(self, x, y):
         return self.__grid[y][x]
