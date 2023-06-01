@@ -49,7 +49,7 @@ class Map:
         for _ in range(numPallets):
             coordinate = random.choice(self.positions)
             x, y = coordinate
-            self.grid[y][x] = Pallet()
+            self.grid[y][x] = Pallet(x,y)
             self.emptyCoordinates.remove(coordinate)
 
     def generateGate(self) -> None:

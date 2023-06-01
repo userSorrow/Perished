@@ -1,34 +1,38 @@
 Completion List:
 
-1. When generator is finished, generator disappears (finished)
-    - Added Generator positions (x,y)
+1. When generator is finished, generator disappears (completed)
+    - Added Generator positions (x,y) (completed)
     
 2. Pallets can vault(finished)
-
+    - Added Pallet positions (x,y) (completed)
 
 3. Better autogenerate
-    - Pallets do not spawn in the corner (finished)
+    - Pallets do not spawn in the corner (completed)
     - Generators are spreaded across evenly (yeah im gonna do that later)
+    - Place Killer position in a corner? (completed)
 
-4. 
+4. Turn-Based Gameplay
+    - each player / killer has 2 turns? (completed)
 
 5. Gate class   
     - string will be ~~~ (completed)
     - Upon completing all generators, the gate will spawn randomly from one side of the map (completed)
     - a portion of the wall will be replaced with Gate (completed)
-    - When player arrives at gate and escapes, game should be over
+    - When player arrives at gate and escapes, game should be over (completed)
 
 6. Killer class
-    - Killer similar to player
-    - Ability to break Pallets
-    - Kicks generator to limit progress
+    - Killer similar to player (completed)
+    - Bug where when generating map, the player's icon is the same as the killer's icon
+    - Ability to break Pallets (completed)
+    - Kicks generator to limit progress (completed)
     - Attacks player for one damage
+    - game ends when player is dead, might need to revamp this for 
 
 7. Item class   
     - Toolboxes, finishes generators faster
     - Medkit, heals one health
     - eh, more to come 
 
-8. Perks and 
+
 
     
