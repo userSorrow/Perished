@@ -13,6 +13,7 @@ Completion List:
 
 4. Turn-Based Gameplay
     - each player / killer has 2 turns? (completed)
+    - need to implement non-case sensitive inputs (completed)
 
 5. Gate class   
     - string will be ~~~ (completed)
@@ -25,8 +26,8 @@ Completion List:
     - Bug where when generating map, the player's icon is the same as the killer's icon
     - Ability to break Pallets (completed)
     - Kicks generator to limit progress (completed)
-    - Attacks player for one damage
-    - game ends when player is dead, might need to revamp this for 
+    - Attacks player for one damage (completed)
+    - game ends when player is dead, might need to revamp this (completed)
 
 7. Item class   
     - Toolboxes, finishes generators faster

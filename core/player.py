@@ -25,7 +25,7 @@ class Player:
         map.addPlayer(self)
     
     def isDead(self):
-        return self.health <= 2
+        return self.health <= 0
     
     def getAvailableOptions(self) -> str:
         """
@@ -49,7 +49,10 @@ class Player:
                 return "vault pallet"
             if isinstance(item, Wall): # when reaching wall, there should be no movement option
                 return "wall"
-            # add killer later
+            if isinstance(item, Killer):
+                 # add killer later
+                pass
+           
 
         options = {}
         for key in list(self.movementChanges.keys()):
@@ -130,8 +133,8 @@ class Killer(Player):
         """
         options = {
             "Move": ["up", "down", "right", "left"],
-            "Generator": ["fix"],
-            "Pallet": ["throw"],
+            "Generator": ["break"],
+            "Pallet": ["break"],
             "Stay": ["stay"]
         }
         """
@@ -147,7 +150,7 @@ class Killer(Player):
                 return "wall"
             if isinstance(item, Player):
                 return "attack " + item.name
-            # add killer later
+
 
         options = {}
         for key in list(self.movementChanges.keys()):

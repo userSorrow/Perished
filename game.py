@@ -5,14 +5,15 @@ from core.generator import Generator
 from core.wall import Wall
 from core.gate import Gate
 
-map = Map(11,11)
+map = Map(7,7)
 #playerName = input("Enter Player Name: ")
 player = Player("b", map)
 killer = Killer("k", map)
 playing = True
 turn = 0
+playerDead = player.isDead()
 
-while playing:
+while playing and not playerDead:
     print(map)
     playerTurn = turn % 4 in [0,1]
     killerTurn = turn % 4 in [2,3]
@@ -25,7 +26,11 @@ while playing:
         for option in list(options.keys()):
             print(str(option) + ": " + str(options[option]))
         selected = input("What would you like to do? ")
-        player.move(selected.lower())
+        if selected not in list(player.movementChanges.keys()):
+            print("\nInvalid Move, Please Try Again!")
+            turn -= 1
+        else:
+            player.move(selected.lower())
     
     elif killerTurn:
         print("Killer's Turn")
@@ -35,7 +40,11 @@ while playing:
         for option in list(options.keys()):
             print(str(option) + ": " + str(options[option]))
         selected = input("What would you like to do? ")
-        killer.move(selected.lower())
+        if selected not in list(killer.movementChanges.keys()):
+            print("\nInvalid Move, Please Try Again!")
+            turn -= 1
+        else:
+            killer.move(selected.lower())
 
     
     
@@ -45,9 +54,14 @@ while playing:
     
     turn += 1
     playing = not player.crossGate
-
-print("""\nYou survived!    
-For now....""")
+    playerDead = player.isDead()
+    
+if playerDead:
+    print(f"\nPlayer {player.name} has died!")
+    
+elif not playing:
+    print("""\nYou survived!    
+    For now....""")
         
     
     
