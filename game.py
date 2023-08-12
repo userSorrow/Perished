@@ -1,17 +1,19 @@
-from core.player import Player, Killer
+from core.player import Player
+from core.killer import Killer
 from core.map import Map
 from core.pallet import Pallet
 from core.generator import Generator
-from core.wall import Wall
-from core.gate import Gate
 
-map = Map(7,7)
+map = Map()
 #playerName = input("Enter Player Name: ")
 player = Player("b", map)
 killer = Killer("k", map)
+# print(map)
+
 playing = True
 turn = 0
 playerDead = player.isDead()
+
 
 while playing and not playerDead:
     print(map)
@@ -49,6 +51,7 @@ while playing and not playerDead:
     
     
     totalGenLeft = len(Generator.all)
+    print(totalGenLeft)
     if totalGenLeft == 0 and not map.gateOpen:
         map.generateGate()
     

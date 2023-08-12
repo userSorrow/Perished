@@ -5,6 +5,8 @@ from core.map import Map
 from core.pallet import Pallet
 from core.wall import Wall
 from core.gate import Gate
+from core.shop import Shop
+
 
 class Player:
     movementChanges = {
@@ -22,6 +24,7 @@ class Player:
         self.positionX = int((self.map.height - 1) / 2) if self.map.height % 2 == 1 else int((self.map.height) / 2) # this  
         self.positionY = int((self.map.width - 1) /2) if self.map.width % 2 == 1 else int((self.map.width) / 2)
         self.crossGate = False
+        self.inventory = {}
         map.addPlayer(self)
     
     def isDead(self):
@@ -41,7 +44,7 @@ class Player:
             if item == None:
                 return "move " + move
             if isinstance(item, Generator):
-                return "fix generator"
+                return f"generator progress: {item.progress}% -> fix generator?"
             # need to add a better one for being unable to vault
             if isinstance(item, Gate):             # need to add a gate one
                 return "escape"
@@ -49,9 +52,10 @@ class Player:
                 return "vault pallet"
             if isinstance(item, Wall): # when reaching wall, there should be no movement option
                 return "wall"
-            if isinstance(item, Killer):
-                 # add killer later
-                pass
+            
+            # if isinstance(item, Killer):
+            #      # add killer later
+            #     pass
            
 
         options = {}
@@ -95,7 +99,7 @@ class Player:
                 x = item.positionX
                 y = item.positionY
                 
-                self.map.grid[y][x] = None
+                self.map.grid[x][y] = None
                 Generator.all.remove(item) # this is used later on to determine if player completes every generator
             # find the square the player is refering to and if generator is completed that square becomes "None"
             
@@ -122,70 +126,3 @@ class Player:
     def __str__(self) -> str:
         return "*"
 
-class Killer(Player):
-    def __init__(self, name, map) -> None:
-        super().__init__(name, map)
-        self.positionX, self.positionY = random.choice(self.map.corners)
-        self.dmg = 1
-        map.addPlayer(self)
-        
-    def getAvailableOptions(self) -> str:
-        """
-        options = {
-            "Move": ["up", "down", "right", "left"],
-            "Generator": ["break"],
-            "Pallet": ["break"],
-            "Stay": ["stay"]
-        }
-        """
-        def getResponse(move) -> str:
-            item = self.getItemAt(move)
-            if item == None:
-                return "move " + move
-            if isinstance(item, Generator):
-                return "break generator"
-            if isinstance(item, Pallet):
-                return "break pallet"
-            if isinstance(item, Wall): # when reaching wall, there should be no movement option
-                return "wall"
-            if isinstance(item, Player):
-                return "attack " + item.name
-
-
-        options = {}
-        for key in list(self.movementChanges.keys()):
-            if getResponse(key) != "wall": # there is probably a better way to prevent option from coming up
-                options[key] = getResponse(key)
-            
-        return options
-    
-    def attack(self, player):
-        player.health -= self.dmg
-        
-    def move(self, direction) -> None:
-        # need a method to check the surrounding of the player
-        # if the grid where the player is going is None, that means it is an empty site
-        
-        self.map.grid[self.positionY][self.positionX] = None # sets the original player position to None
-        item = self.getItemAt(direction) 
-        
-        if item is None:
-            self.positionX += self.movementChanges[direction][0] # this is wrong because we are setting the position at this position not actually changing the position
-            self.positionY += self.movementChanges[direction][1]
-            
-        if isinstance(item, Generator):
-            item.increaseProgress(-25) # reduces the generator's progress 
-            
-        if isinstance(item, Pallet): # need one for pallet
-            x = item.positionX
-            y = item.positionY
-                
-            self.map.grid[y][x] = None
-            
-        if isinstance(item, Player): # need one for player
-            self.attack(item)
-        
-        self.map.grid[self.positionY][self.positionX] = self # put player back on map (and suits perfectly for walls)
-    
-    def __str__(self) -> str:
-        return "K"

@@ -33,6 +33,15 @@ Completion List:
     - Toolboxes, finishes generators faster
     - Medkit, heals one health
     - eh, more to come 
+8. Better autogeneration
+    - right now, the map is very open, and killer's have huge advantage
+    - implement looping structures, double L's, T and L <-- structure for now
+
+9. Bugs
+    - Need to fix a bug where the player can waste a move by typing a non-existent input
+    - a big where the player spawns with the same icon as the killer <- this will confuse the player immensely
+    - a better UI system to explainwhat icons represent what and an introduction
+
 
 
 

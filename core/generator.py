@@ -1,16 +1,18 @@
 class Generator:
     all = []
     
-    def __init__(self, positionX, positionY):
+    def __init__(self, positionX=None, positionY=None):
         self.positionX = positionX # added generator position (x, y)
         self.positionY = positionY
         self.progress = 0 # max 100
+        # self.health = 100
         self.completed = False
         self.all.append(self)
         
 
     def increaseProgress(self, amount) -> None: # might need to change name to a more neutral (not increasing nor decreasing)
         self.progress += amount
+        # self.health += self.progress
         if self.progress < 0: #prevents the killer from breaking the generator's progress to a negative number
             self.progress = 0
         if self.progress >= 100:
